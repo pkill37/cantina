@@ -1,0 +1,8 @@
+{
+  "name": "ua-cantina-comida-boa",
+  "scripts": {
+    "build": "rm -rf dest && cp -r src dest",
+    "predeploy": "npm run build",
+    "deploy": "git push origin `git subtree split --prefix dest master`:gh-pages --force"
+  }
+}

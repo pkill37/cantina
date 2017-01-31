@@ -1,0 +1,34 @@
+@import url('https://fonts.googleapis.com/css?family=Bungee');
+
+:root {
+    --color-blue: #01B0F0;
+    --color-green: #AEEE00;
+    --color-red: #FF3743;
+}
+
+body {
+    background: var(--color-blue);
+    font-family: 'Bungee', cursive;
+}
+
+.container {
+    margin: 0 auto;
+    width: 60%;
+    text-align: center;
+}
+
+#question {
+    color: #fff;
+}
+
+#answer {
+    font-size: 4em;
+}
+
+.positive {
+    color: var(--color-green);
+}
+
+.negative {
+    color: var(--color-red);
+}
