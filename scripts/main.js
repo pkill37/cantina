@@ -53,6 +53,7 @@ function updateAnswer(response) {
     if (best) {
         const answer = document.querySelector('#answer')
         answer.textContent = 'Sim.'
+        answer.classList.remove('negative')
         answer.classList.add('positive')
 
         const canteen = document.querySelector('#canteen')
@@ -64,7 +65,7 @@ function updateAnswer(response) {
 }
 
 function bestMenu(menus) {
-    const good = ['frango', 'lombo', 'bacalhau com natas', 'peru']
+    const good = ['frango', 'lombo', 'bacalhau com natas']
 
     for (const [canteen, meals] of menus) {
         for (const meal of meals) {
