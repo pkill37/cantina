@@ -1,5 +1,5 @@
 {
-  "name": "ua-cantina-comida-boa",
+  "name": "cantina-comida-boa",
   "scripts": {
     "build": "rm -rf dest && cp -r src dest",
     "predeploy": "npm run build",
