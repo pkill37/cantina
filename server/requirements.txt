@@ -1,3 +1,0 @@
-sanic
-Sanic-Cors
-aiohttp
