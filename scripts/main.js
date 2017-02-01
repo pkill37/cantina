@@ -79,5 +79,5 @@ function bestMenu(menus) {
     return null
 }
 
-const url = 'http://services.web.ua.pt/sas/ementas?date=day&format=jsonp'
+const url = 'services.web.ua.pt/sas/ementas?date=day&format=jsonp'
 getJSONP(url, 'cb', updateAnswer)
