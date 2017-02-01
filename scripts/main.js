@@ -65,7 +65,8 @@ function updateAnswer(response) {
 }
 
 function bestMenu(menus) {
-    const good = ['frango', 'lombo', 'bacalhau com natas']
+    // TODO: reorder to give priority to some meals
+    const good = ['frango', 'lombo', 'bacalhau com natas', 'porco', 'grelhada mista', 'rojões', 'frita']
 
     for (const [canteen, meals] of menus) {
         for (const meal of meals) {
