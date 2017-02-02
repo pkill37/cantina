@@ -1,4 +1,4 @@
-# A comida na cantina é boa?
+# cantina
 
 Stupid web application (in Portuguese) that checks if the food at my university's canteens is reasonably good.
 
