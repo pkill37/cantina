@@ -1,6 +1,6 @@
 # A comida na cantina é boa?
 
-Stupid web application that checks if the food at my university's canteens is good (opinionated).
+Stupid web application (in Portuguese) that checks if the food at my university's canteens is reasonably good.
 
 Live at [http://cantina.surge.sh/](http://cantina.surge.sh/)
 
