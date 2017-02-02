@@ -17,7 +17,7 @@ function getJSONP(url, param, cb) {
     document.querySelector('head').appendChild(script)
 }
 
-function isInterestedInDinner() {
+function wantsDinner() {
     return new Date().getHours() >= 14
 }
 
@@ -35,7 +35,7 @@ function dinnerMenus(menus) {
 
 function parseResponse(response) {
     menus = validMenus(response.menus.menu)
-    menus = isInterestedInDinner() ? lunchMenus(menus) : dinnerMenus(menus)
+    menus = wantsDinner() ? dinnerMenus(menus) : lunchMenus(menus)
 
     const map = new Map()
 
@@ -48,6 +48,7 @@ function parseResponse(response) {
 
 function updateAnswer(response) {
     const menus = parseResponse(response)
+    console.log(menus)
     const best = bestMenu(menus)
 
     if (best) {
@@ -60,7 +61,7 @@ function updateAnswer(response) {
         canteen.textContent = `ao ${best.canteen}`
 
         const meal = document.querySelector('#meal')
-        meal.textContent = `${best.meal.toLowerCase()}.`
+        meal.textContent = `${best.meal.toLowerCase()}`
     }
 }
 
