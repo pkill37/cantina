@@ -12,6 +12,14 @@ Cross-domain AJAX requests are forbidden in the browser by the [same-origin secu
 
 For the sake of keeping this running self-hosted for free, I resorted to JSONP which is a clever hack that basically wraps up a response in a callback function such that it forms valid JavaScript code. It then takes advantage of the fact that you can embed arbitrary cross-domain scripts in a page to execute the given callback function, which in essence is requesting the resource.
 
+```javascript
+function getJSONP(url, param, cb) {
+    const script = document.createElement('script')
+    script.src = `${url}&${param}=${cb.name}`
+    document.querySelector('head').appendChild(script)
+}
+```
+
 ## Deployment
 
 Ideally this would be hosted off of GitHub Pages, but their traffic runs over HTTPS and the API I'm using is still plain HTTP, which gave me all kinds of warnings in modern browsers, so I'm using [surge.sh](surge.sh) as an alternative.
