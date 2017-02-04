@@ -13,7 +13,7 @@ function getJSON(url, cb) {
 
 function getJSONP(url, param, cb) {
     const script = document.createElement('script')
-    script.src = `${url}&${param}=${cb.name}`
+    script.src = `${url}&${param}=${cb.name}&v=${Date.now()}`
     document.querySelector('head').appendChild(script)
 }
 

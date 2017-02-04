@@ -20,6 +20,16 @@ function getJSONP(url, param, cb) {
 }
 ```
 
+Embedded scripts are likely to be cached by the browser though. You may want to force a fresh request each time by appending something unique to the query string (e.g. the current UNIX timestamp).
+
+```javascript
+function getJSONP(url, param, cb) {
+    const script = document.createElement('script')
+    script.src = `${url}&${param}=${cb.name}&v=${Date.now()}`
+    document.querySelector('head').appendChild(script)
+}
+```
+
 ## Deployment
 
 Ideally this would be hosted off of GitHub Pages, but their traffic runs over HTTPS and the API I'm using is still plain HTTP, which gave me all kinds of warnings in modern browsers, so I'm using [surge.sh](surge.sh) as an alternative.
