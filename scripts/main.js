@@ -63,6 +63,9 @@ function updateAnswer(response) {
         const meal = document.querySelector('#meal')
         meal.textContent = `${best.meal.toLowerCase()}`
     }
+
+    const action = document.querySelector('#action')
+    action.textContent = wantsDinner() ? 'jantar' : 'almoçar'
 }
 
 function bestMenu(menus) {

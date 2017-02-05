@@ -1,6 +1,6 @@
 # cantina
 
-Stupid web application (in Portuguese) that checks if the food at my university's canteens is reasonably good.
+Stupid web application that checks if the next meal's food at my university's canteens is (arguably) good.
 
 Live at [http://cantina.surge.sh/](http://cantina.surge.sh/)
 
