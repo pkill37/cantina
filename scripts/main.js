@@ -77,7 +77,7 @@ function bestMenu(menus) {
             for (const g of good) {
                 if (meal.toLowerCase().includes(g)) {
                     for (const b of bad) {
-                        if (!meal.toLowerCase().includes(b) {
+                        if (!meal.toLowerCase().includes(b)) {
                             return {canteen, meal}
                         }
                     }
