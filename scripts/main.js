@@ -34,8 +34,8 @@ function dinnerMenus(menus) {
 }
 
 function parseResponse(response) {
-    menus = validMenus(response.menus.menu)
-    menus = wantsDinner() ? dinnerMenus(menus) : lunchMenus(menus)
+    const valid = validMenus(response.menus.menu)
+    const menus = wantsDinner() ? dinnerMenus(valid) : lunchMenus(valid)
 
     const map = new Map()
 
@@ -48,7 +48,6 @@ function parseResponse(response) {
 
 function updateAnswer(response) {
     const menus = parseResponse(response)
-    console.log(menus)
     const best = bestMenu(menus)
 
     if (best) {
@@ -71,12 +70,17 @@ function updateAnswer(response) {
 function bestMenu(menus) {
     // TODO: reorder to give priority to some meals
     const good = ['frango', 'lombo', 'bacalhau com natas', 'porco', 'grelhada mista', 'rojões', 'frita']
+    const bad = ['feijão preto', 'solha', 'cozido', 'escondido'];
 
     for (const [canteen, meals] of menus) {
         for (const meal of meals) {
             for (const g of good) {
                 if (meal.toLowerCase().includes(g)) {
-                    return {canteen, meal}
+                    for (const b of bad) {
+                        if (!meal.toLowerCase().includes(b) {
+                            return {canteen, meal}
+                        }
+                    }
                 }
             }
         }
