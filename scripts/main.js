@@ -70,17 +70,18 @@ function updateAnswer(response) {
 function bestMenu(menus) {
     // TODO: reorder to give priority to some meals
     const good = ['frango', 'lombo', 'bacalhau com natas', 'porco', 'grelhada mista', 'rojões', 'frita']
-    const bad = ['feijão preto', 'solha', 'cozido', 'escondido'];
+    const bad = ['feijão preto', 'solha', 'cozido', 'escondido', 'seitan'];
 
     for (const [canteen, meals] of menus) {
         for (const meal of meals) {
             for (const g of good) {
                 if (meal.toLowerCase().includes(g)) {
                     for (const b of bad) {
-                        if (!meal.toLowerCase().includes(b)) {
-                            return {canteen, meal}
+                        if (meal.toLowerCase().includes(b)) {
+                            return null
                         }
                     }
+                    return {canteen, meal}
                 }
             }
         }
