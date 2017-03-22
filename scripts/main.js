@@ -54,6 +54,7 @@ function updateAnswer(response) {
         const answer = document.querySelector('#answer')
         answer.textContent = 'Sim.'
         answer.classList.remove('negative')
+        answer.classList.remove('mid')
         answer.classList.add('positive')
 
         const canteen = document.querySelector('#canteen')
@@ -64,7 +65,7 @@ function updateAnswer(response) {
     }
 
     const action = document.querySelector('#action')
-    action.textContent = wantsDinner() ? 'jantar' : 'almoçar'
+    action.textContent = wantsDinner() ? 'jantar' : 'almoço'
 }
 
 function bestMenu(menus) {
