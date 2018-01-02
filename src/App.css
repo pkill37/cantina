@@ -1,35 +1,13 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
-}
-
-.App-intro {
-  font-size: large;
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
 @import url('https://fonts.googleapis.com/css?family=Bungee');
 
 :root {
     --color-blue: #01B0F0;
+    --color-dark-blue: #00437a;
     --color-green: #AEEE00;
     --color-red: #FF3743;
-    --color-yellow: #ffe100;
+    --color-white: #fff;
+    --color-light-yellow: #ffe882;
+    --color-yellow: #ffd000;
 }
 
 html {
@@ -37,10 +15,28 @@ html {
 }
 
 body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.App {
     background: var(--color-blue);
-    color: #fff;
-    font-family: 'Bungee', sans-serif;
-    margin: 0 2rem;
+    color: var(--color-white);
+}
+
+.App--night {
+    background: var(--color-dark-blue);
+    color: var(--color-light-yellow);
+}
+
+.App-header {
+    background: rgba(0,0,0,0.2);
+}
+
+.App-body,
+.App-header {
+    padding: 2rem;
 }
 
 .lead {
@@ -52,16 +48,4 @@ body {
     margin: 2rem 0;
     font-size: 1.5rem;
     font-weight: normal;
-}
-
-.positive {
-    color: var(--color-green);
-}
-
-.negative {
-    color: var(--color-red);
-}
-
-.mid {
-    color: var(--color-yellow);
 }
