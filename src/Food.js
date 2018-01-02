@@ -6,9 +6,7 @@ class Food {
     }
 
     like() {
-        console.log('HEY!!!!!!!!!!')
         this.likes++
-        console.log('NOW', this.likes)
     }
 
     dislike() {
