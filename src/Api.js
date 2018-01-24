@@ -8,8 +8,8 @@ export function parseApiResponse(response, dinner = 'dinner') {
     const open = response.menus.menu.filter(m => m.items.item !== {} && !m['@attributes'].disabled.startsWith('Encerrado'))
     const menus = open.filter(m => m['@attributes']['meal'] === dinner ? 'Jantar' : 'Almoço')
     const options = []
-    
-    let f = (food) => food === 'string' ? new Food(food) : null
+
+    let f = (food) => typeof food === 'string' ? new Food(food) : null
 
     for (const menu of menus) {
         const items = menu.items.item
@@ -27,7 +27,7 @@ export function parseApiResponse(response, dinner = 'dinner') {
         }
         options.push(new Option(menu['@attributes']['canteen'], foods))
     }
-    
+
     // Sort by total likes
     options.sort((o1, o2) => Object.values(o1.foods).filter(f => f).reduce((acc, val) => acc + val.likes) - Object.values(o2.foods).filter(f => f).reduce((acc, val) => acc + val.likes))
 
