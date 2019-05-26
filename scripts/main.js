@@ -91,5 +91,6 @@ function bestMenu(menus) {
     return null
 }
 
-const url = 'http://services.web.ua.pt/sas/ementas?date=day&format=jsonp'
-getJSONP(url, 'cb', updateAnswer)
+const url = 'http://services.web.ua.pt/sas/ementas?date=day&format=json'
+const proxied_url = `https://cors.io/?${url}`
+getJSON(proxied_url, updateAnswer)
