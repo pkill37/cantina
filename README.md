@@ -2,7 +2,7 @@
 
 Stupid web application that checks if the next meal's food at my university's canteens is good.
 
-[http://cantina.surge.sh/](http://cantina.surge.sh/)
+[https://fabiomaia.github.io/cantina/](https://fabiomaia.github.io/cantina/)
 
 ![cantina](http://i.imgur.com/nOzZbIq.png)
 
