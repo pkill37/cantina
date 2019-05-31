@@ -71,7 +71,7 @@ function updateAnswer(response) {
 function bestMenu(menus) {
     // TODO: reorder to give priority to some meals
     const good = ['bolonhesa', 'frango', 'lombo', 'bacalhau com natas', 'porco', 'grelhada mista', 'rojões', 'frita', 'valenciana']
-    const bad = ['feijão preto', 'solha', 'cozido', 'escondido', 'seitan', 'soja', 'pescada'];
+    const bad = ['feijão preto', 'solha', 'cozido', 'escondido', 'seitan', 'soja', 'pescada', 'perca'];
 
     for (const [canteen, meals] of menus) {
         for (const meal of meals) {
