@@ -8,7 +8,7 @@ Stupid web application that checks if the next meal's food at the University of 
 
 ## Problem
 
-Cross-domain AJAX requests are forbidden in the browser by the [same-origin security policy](https://en.wikipedia.org/wiki/Same-origin_policy). The API made available by the university does not allow cross-origin requests via CORS, so I can't just directly hit the API from the browser. Furthermore, since the university's API is served over HTTP, serving this application over HTTPS would throw mixed-content errors in most modern browsers.
+Cross-domain AJAX requests are forbidden in the browser by the [same-origin security policy](https://en.wikipedia.org/wiki/Same-origin_policy). The API made available by the university does not allow cross-origin requests via [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS), so I can't just directly hit the API from the browser. Furthermore, since the university's API is served over HTTP, serving this application over HTTPS would throw mixed-content errors in most modern browsers.
 
 ## Solutions
 
@@ -28,7 +28,7 @@ we can instead simply request
 https://cors.io/?http://services.web.ua.pt/sas/ementas?date=day&format=json
 ```
 
-CORS is the modern and recommended solution to the same-origin security policy, unless you need to support browsers invented before CORS, in which case you can resort to JSONP.
+CORS is the modern and recommended solution for running cross-origin requests.
 
 ### JSONP
 
@@ -37,7 +37,7 @@ Alternatively JSONP is an older technique that precedes CORS that is useful in r
 Fundamentally it takes advantage of the fact that you *can* always embed arbitrary cross-domain scripts in a page, e.g.
 
 ```
-<script src="http://services.web.ua.pt/sas/ementas?date=day&format=jsonp&cb=f"></script>
+<script src="http://services.web.ua.pt/sas/ementas?date=day&format=jsonp&cb=updateAnswer"></script>
 ```
 
 If instead of a typical JSON-encoded HTTP response like
@@ -46,22 +46,28 @@ If instead of a typical JSON-encoded HTTP response like
 {"@attributes":{"request":"\/sas\/ementas","request_timestamp":"1564579826"},"menus":{"@attributes":{"zone":"santiago","type":"day"},"menu":[{"@attributes":{"canteen":"Refeit\u00f3rio de Santiago","meal":"Almo\u00e7o","date":"Wed, 31 Jul 2019 14:30:01 +0100","weekday":"Wednesday","weekdayNr":"3","disabled":"Encerrado - refei\u00e7\u00f5es servidas no refeit\u00f3rio do crasto"},"items":{}},{"@attributes":{"canteen":"Refeit\u00f3rio de Santiago","meal":"Jantar","date":"Wed, 31 Jul 2019 14:30:01 +0100","weekday":"Wednesday","weekdayNr":"3","disabled":"Encerrado - refei\u00e7\u00f5es servidas no refeit\u00f3rio do crasto"},"items":{}},{"@attributes":{"canteen":"Refeit\u00f3rio do Crasto","meal":"Almo\u00e7o","date":"Wed, 31 Jul 2019 14:30:01 +0100","weekday":"Wednesday","weekdayNr":"3","disabled":"0"},"items":{"item":["Sopa de nabi\u00e7as","Bife de peru grelhado e batata cozida","Arroz de marisco","Cozido simples","Badejo cozido com batata cozida e feij\u00e3o verde","Fruta da \u00e9poca ou doce","Buffet de saladas",{"@attributes":{"name":"Diversos"}},"P\u00e3o de mistura"]}},{"@attributes":{"canteen":"Refeit\u00f3rio do Crasto","meal":"Jantar","date":"Wed, 31 Jul 2019 14:30:01 +0100","weekday":"Wednesday","weekdayNr":"3","disabled":"0"},"items":{"item":["Sopa de nabi\u00e7as","Frango estufado com arroz de ervilhas",{"@attributes":{"name":"Prato normal peixe"}},"Seitan de cebolada",{"@attributes":{"name":"Prato vegetariano"}},{"@attributes":{"name":"Prato op\u00e7\u00e3o"}},"Buffet de saladas","P\u00e3o de mistura","Fruta da \u00e9poca ou doce"]}},{"@attributes":{"canteen":"Snack-Bar\/Self","meal":"Almo\u00e7o","date":"Wed, 31 Jul 2019 14:30:01 +0100","weekday":"Wednesday","weekdayNr":"3","disabled":"0"},"items":{"item":["Sopa de nabi\u00e7as","Arroz de aves","Espadarte grelhado com molho de mostarda e batata cozida","Buffet de saladas","Cozido simples","Fruta da \u00e9poca ou doce",{"@attributes":{"name":"Bebida"}}]}}]}})
 ```
 
-the remote server instead wraps up the HTTP response in a callback function `f` (presumably defined before the embedded script is run) such that it forms valid JavaScript code
+the remote server instead wraps up the HTTP response in a callback function `updateAnswer` (presumably defined before the embedded script is run) such that it forms valid JavaScript code
 
 ```
-f({"@attributes":{"request":"\/sas\/ementas","request_timestamp":"1564579826"},"menus":{"@attributes":{"zone":"santiago","type":"day"},"menu":[{"@attributes":{"canteen":"Refeit\u00f3rio de Santiago","meal":"Almo\u00e7o","date":"Wed, 31 Jul 2019 14:30:01 +0100","weekday":"Wednesday","weekdayNr":"3","disabled":"Encerrado - refei\u00e7\u00f5es servidas no refeit\u00f3rio do crasto"},"items":{}},{"@attributes":{"canteen":"Refeit\u00f3rio de Santiago","meal":"Jantar","date":"Wed, 31 Jul 2019 14:30:01 +0100","weekday":"Wednesday","weekdayNr":"3","disabled":"Encerrado - refei\u00e7\u00f5es servidas no refeit\u00f3rio do crasto"},"items":{}},{"@attributes":{"canteen":"Refeit\u00f3rio do Crasto","meal":"Almo\u00e7o","date":"Wed, 31 Jul 2019 14:30:01 +0100","weekday":"Wednesday","weekdayNr":"3","disabled":"0"},"items":{"item":["Sopa de nabi\u00e7as","Bife de peru grelhado e batata cozida","Arroz de marisco","Cozido simples","Badejo cozido com batata cozida e feij\u00e3o verde","Fruta da \u00e9poca ou doce","Buffet de saladas",{"@attributes":{"name":"Diversos"}},"P\u00e3o de mistura"]}},{"@attributes":{"canteen":"Refeit\u00f3rio do Crasto","meal":"Jantar","date":"Wed, 31 Jul 2019 14:30:01 +0100","weekday":"Wednesday","weekdayNr":"3","disabled":"0"},"items":{"item":["Sopa de nabi\u00e7as","Frango estufado com arroz de ervilhas",{"@attributes":{"name":"Prato normal peixe"}},"Seitan de cebolada",{"@attributes":{"name":"Prato vegetariano"}},{"@attributes":{"name":"Prato op\u00e7\u00e3o"}},"Buffet de saladas","P\u00e3o de mistura","Fruta da \u00e9poca ou doce"]}},{"@attributes":{"canteen":"Snack-Bar\/Self","meal":"Almo\u00e7o","date":"Wed, 31 Jul 2019 14:30:01 +0100","weekday":"Wednesday","weekdayNr":"3","disabled":"0"},"items":{"item":["Sopa de nabi\u00e7as","Arroz de aves","Espadarte grelhado com molho de mostarda e batata cozida","Buffet de saladas","Cozido simples","Fruta da \u00e9poca ou doce",{"@attributes":{"name":"Bebida"}}]}}]}})
+updateAnswer({"@attributes":{"request":"\/sas\/ementas","request_timestamp":"1564579826"},"menus":{"@attributes":{"zone":"santiago","type":"day"},"menu":[{"@attributes":{"canteen":"Refeit\u00f3rio de Santiago","meal":"Almo\u00e7o","date":"Wed, 31 Jul 2019 14:30:01 +0100","weekday":"Wednesday","weekdayNr":"3","disabled":"Encerrado - refei\u00e7\u00f5es servidas no refeit\u00f3rio do crasto"},"items":{}},{"@attributes":{"canteen":"Refeit\u00f3rio de Santiago","meal":"Jantar","date":"Wed, 31 Jul 2019 14:30:01 +0100","weekday":"Wednesday","weekdayNr":"3","disabled":"Encerrado - refei\u00e7\u00f5es servidas no refeit\u00f3rio do crasto"},"items":{}},{"@attributes":{"canteen":"Refeit\u00f3rio do Crasto","meal":"Almo\u00e7o","date":"Wed, 31 Jul 2019 14:30:01 +0100","weekday":"Wednesday","weekdayNr":"3","disabled":"0"},"items":{"item":["Sopa de nabi\u00e7as","Bife de peru grelhado e batata cozida","Arroz de marisco","Cozido simples","Badejo cozido com batata cozida e feij\u00e3o verde","Fruta da \u00e9poca ou doce","Buffet de saladas",{"@attributes":{"name":"Diversos"}},"P\u00e3o de mistura"]}},{"@attributes":{"canteen":"Refeit\u00f3rio do Crasto","meal":"Jantar","date":"Wed, 31 Jul 2019 14:30:01 +0100","weekday":"Wednesday","weekdayNr":"3","disabled":"0"},"items":{"item":["Sopa de nabi\u00e7as","Frango estufado com arroz de ervilhas",{"@attributes":{"name":"Prato normal peixe"}},"Seitan de cebolada",{"@attributes":{"name":"Prato vegetariano"}},{"@attributes":{"name":"Prato op\u00e7\u00e3o"}},"Buffet de saladas","P\u00e3o de mistura","Fruta da \u00e9poca ou doce"]}},{"@attributes":{"canteen":"Snack-Bar\/Self","meal":"Almo\u00e7o","date":"Wed, 31 Jul 2019 14:30:01 +0100","weekday":"Wednesday","weekdayNr":"3","disabled":"0"},"items":{"item":["Sopa de nabi\u00e7as","Arroz de aves","Espadarte grelhado com molho de mostarda e batata cozida","Buffet de saladas","Cozido simples","Fruta da \u00e9poca ou doce",{"@attributes":{"name":"Bebida"}}]}}]}})
 ```
 
-then one can embed the script `<script src="http://services.web.ua.pt/sas/ementas?date=day&format=jsonp&cb=f"></script>` which will trigger the `f` function call (with the data that we wanted to obtain) which can finally process the data arbitrarily. In essence this is equivalent to requesting the resource as originally intended, and is effectively circumnavigating the same-origin security policy.
+then one can embed this script and trigger the `updateAnswer` function call (with the data that we wanted to obtain) which can finally process the data arbitrarily. In essence this is equivalent to requesting the resource as originally intended, and is effectively circumnavigating the same-origin security policy.
 
 Programatically,
 
 ```javascript
+function updateAnswer(json) {
+    // ...
+}
+
 function getJSONP(url, param, cb) {
     const script = document.createElement('script')
     script.src = `${url}&${param}=${cb.name}`
     document.querySelector('head').appendChild(script)
 }
+
+getJSONP('http://services.web.ua.pt/sas/ementas?date=day&format=jsonp&cb=updateAnswer', 'cb', updateAnswer)
 ```
 
 Embedded scripts are likely to be cached by the browser though. You may want to force a fresh request each time by appending something unique to the query string (e.g. the current Unix timestamp) to invalidate the cache.
